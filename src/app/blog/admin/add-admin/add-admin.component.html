@@ -1,0 +1,80 @@
+<br><br><br>
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-9 col-lg-6 col-xl-5">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+            class="img-fluid" alt="Sample image">
+        </div>
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+          <div class="alert alert-danger" *ngIf="errorMessage">
+            {{errorMessage}}
+          </div>
+          <form #formulaire = "ngForm">
+             <!-- Name input -->
+             <div class="form-outline mb-4">
+              <label class="form-label" for="name">Name</label>
+              <input type="text" name="name" id="name" class="form-control form-control-lg"
+                placeholder="Your Name" ngModel required/>
+              
+            </div>
+
+             <!-- Surname input -->
+             <div class="form-outline mb-4">
+              <label class="form-label" for="surname">Surname</label>
+              <input type="text" name="surname" id="surname" class="form-control form-control-lg"
+                placeholder="Your Surname" ngModel required/>
+              
+            </div>
+
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <label class="form-label" for="email">Email address</label>
+              <input type="email" name="email" id="email" class="form-control form-control-lg"
+                placeholder="Enter a valid email address" ngModel email required #emailInput="ngModel"/>
+              
+            </div>
+            <div class="alert alert-danger" *ngIf="emailInput.invalid && emailInput.dirty">
+              Please enter email format
+            </div>
+  
+            <!-- Password input -->
+            <div class="form-outline mb-3">
+              <label class="form-label" for="plaiPassword">Password</label>
+              <input type="password" name="plainPassword" id="plainPassword" class="form-control form-control-lg"
+                placeholder="Enter password" ngModel #pwd="ngModel"/>
+              
+            </div>
+
+            <!-- confirm Password input -->
+            <div class="form-outline mb-3">
+              <label class="form-label" for="repass">R-Password</label>
+              <input type="password" name="repass" id="repass" class="form-control form-control-lg"
+                placeholder="R-enter password" ngModel #repwd="ngModel" (keyup)="checkPassword(pwd,repwd)" />
+              
+            </div>
+            <div class="alert alert-danger" *ngIf="!equal && repwd.dirty">
+              Password don't match
+            </div>
+
+            <!-- image input -->
+            <div class="form-outline mb-3">
+              <label class="form-label" for="image">Image</label>
+              <input type="file" name="image" id="image" class="form-control form-control-lg"
+                placeholder="Select an Image" ngModel required (change)="checkImageType($event)"/>
+            </div>
+            <div class="alert alert-danger" *ngIf="imageErrorMessage">
+              {{imageErrorMessage}}
+            </div>
+  
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <button type="button" class="btn btn-dark btn-lg"
+                style="padding-left: 2.5rem; padding-right: 2.5rem;" [disabled]="!equal || formulaire.invalid || imageErrorMessage" (click)="addUser(formulaire)">Add Admin</button>
+            </div>
+  
+          </form>
+        </div>
+      </div>
+    </div>
+    
+  </section>

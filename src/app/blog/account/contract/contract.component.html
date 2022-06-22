@@ -1,0 +1,61 @@
+<button class="btn btn-dark" (click)="makePdf()">Generate pdf</button> <br>
+<div id="pdfContent" #pdfContent class="all" >
+     <div class="row">
+    <img class="col col-md-1 "src="/assets/images/icon.PNG" alt="logo" width="150px" height="50px">
+    <p class="col col-md-1"></p>
+    <p class="col col-md-1"></p>
+    <p class="col col-md-1"></p>
+    <p class="col col-md-1 id" > 
+        <br>
+        Facture Id: 0000001
+    </p>
+    </div>
+    <br> <br>
+    <h4>Renting Facture</h4>
+    <br> <br>
+<div class="row">
+    <div class="col col-md-3 r">
+        <h5>Owner:</h5>
+        <h6>RentAround Company</h6>
+        <h6>rentaround@gmail.com</h6>
+    </div>
+    <div class="col col-md-8 ">
+        <h5>Renter:</h5>
+        <h6>{{user.name | titlecase}} {{user.surname | titlecase}}</h6>
+        <h6>{{user.email}}</h6>
+    </div>
+    
+</div>
+
+<table id="example" class="table table-striped table-bordered text-center" cellspacing="0" width="100%">
+	<thead>
+		<tr>
+			
+			<th>Car Model</th>
+            <th>User Cin</th>
+            <th>Start date</th>
+			<th>End date</th>
+			<th class="t">Total price </th>
+			
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+            <td>{{reservation.vehicle.model}}</td>
+            <td>........</td>
+			<td>{{reservation.startDate | date:'dd-MM-yyyy'}}</td>
+			<td>{{reservation.endDate | date:'dd-MM-yyyy'}}</td>
+			<td class="p">{{reservation.totalPrice}}DT</td>
+
+		</tr>
+   			
+	</tbody>
+</table>
+<p class="w">This facture is mandatory. You have to bring it with you to get the car you rented</p>
+<p class="wr">Thank you for your visit!</p>
+<div class="sig">
+Signed at ..../..../........ <br> <br>
+Signature : 
+</div>
+</div>
+

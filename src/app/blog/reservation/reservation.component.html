@@ -1,0 +1,108 @@
+<div class="container mt-5 mb-5">	
+    <div class="card">	
+        <div class="row g-0">	
+            <div class="col-md-6 border-end">	
+                <div class="d-flex flex-column justify-content-center">	
+                    <div class="main_image">	
+                        <img src="./assets/images/{{car.image}}" id="main_product_image" alt="" width="350" height="175">	
+                    </div>	
+                </div>	
+            </div>	
+            <div class="col-md-6">	
+                <div class="p-3 right-side">	
+                    <div class="d-flex justify-content-between align-items-center">	
+                        <h3>{{car.model | uppercase}}</h3>
+                    </div>	
+                    <br>	
+                    <form #formulaire = "ngForm">
+                        <!-- startDate input -->
+                        <div class="form-group">
+                            <div class="input-group">
+                                
+                              <input class="form-control form-control-lg" placeholder="Start Date"name="startDate" id="startDate" ngbDatepicker #d="ngbDatepicker" (ngModelChange)="price(d,f)" required ngModel>
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                              </div>
+                            </div>
+                          </div>
+                          <br>    
+                        <!-- End Date input -->
+                        <div class="form-group">
+                            <div class="input-group">
+                                
+                              <input class="form-control form-control-lg" placeholder="End Date"name="endDate" id="endDate" ngbDatepicker #f="ngbDatepicker" (ngModelChange)="price(d,f)" #endDate required ngModel>
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="f.toggle()" type="button" ><i class="bi bi-calendar"></i></button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="alert alert-danger" *ngIf="errorMessage">
+                            {{errorMessage}}
+                          </div>
+                        <br>
+                        
+                       <!-- totalPrice input -->
+                       <div class="form-outline mb-4">
+                          
+                         <input type="number" name="price" id="price" class="form-control form-control-lg"
+                           placeholder="Calculating Price ..." [(ngModel)]="totalPrice" disabled />
+                       </div>
+                       <div *ngIf="authentificationService.isLogged()" class="buttons d-flex flex-row mt-5 gap-3 row">		
+                             <button class="btn btn-dark col" [disabled]=" formulaire.invalid || errorMessage  || !car.availability" (click)="rent(formulaire,d,f)">Rent This Car</button>	
+                             <button *ngIf="authentificationService.isAdmin()" type="button" (click)="removeCar(car.id)" class="btn btn-labeled btn-danger col"><span class="btn-label"><i class="bi bi-trash"></i></span> Remove this Car</button>
+                        </div>
+                        <div class="alert alert-danger text-center" *ngIf="!car.availability && authentificationService.isLogged()">
+                          Not Available
+                        </div>
+                       <div class="alert alert-danger text-center" *ngIf="! authentificationService.isLogged()">
+                        SignIn To Rent This Car
+                       </div>
+                       
+                     </form>
+                    
+                    
+                </div>	
+            </div>	
+        </div>	
+    </div> 
+</div>
+<hr>
+<!-- Main Body -->
+<section>
+  <br> <h1> COMMENT SECTION </h1><br>
+  <div class="container">
+      <div class="row">
+          <div  class="col col-sm-5 col-md-6 col-12 pb-4">
+              <div *ngFor="let comment of comments" class="text-justify darker mt-4 float-left comm">
+                  <img src="./assets/images/{{comment.user.image}}" alt="" class="rounded-circle" width="40" height="40">
+                  <h4> {{comment.user.name |titlecase}} {{comment.user.surname |titlecase}} </h4>
+                  <span>{{comment.createdAt | date: 'dd/MM/yyyy'}}</span>
+                  <br>
+                  <p class="text-justify">{{comment.content}}</p>
+              </div>
+              
+              <div *ngIf="comments.length>0" class="text-center">
+                  <button  [disabled]="currentPage==1" class="page-item btn btn-danger" (click)="previous()">Previous</button>
+                  <button [disabled]="numberOfCommentsInNextPage==0" class="page-item btn btn-danger" (click)="next()">Next</button>
+              </div>
+              
+          </div>
+          <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+              <form id="algin-form" class="formm" #commentForm="ngForm">
+                  <div class="form-group">
+                      <h4>Leave a comment</h4>
+                      <label for="message">Message</label>
+                      <textarea name="content" id="msg" cols="30" rows="5" class="form-control" ngModel></textarea>
+                  </div>
+                  <div *ngIf="authentificationService.isLogged()" class="form-group">
+                      <button type="button" id="post" class="btn btn-danger " (click)="comment(commentForm)">Post Comment</button>
+                  </div>
+                  <div class="alert alert-danger text-center" *ngIf="! authentificationService.isLogged()">
+                    SignIn To Comment
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</section>
+<br><br>

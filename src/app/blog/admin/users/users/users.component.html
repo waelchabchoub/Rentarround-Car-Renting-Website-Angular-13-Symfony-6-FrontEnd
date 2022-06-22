@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="row">
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Name" aria-label="Search" #nameFilterInput>
+            <input class="form-control me-2" type="search" placeholder="Surname" aria-label="Search" #surnameFilterInput>
+            <button class="btn btn-success" type="submit" (click)="filterUsers(nameFilterInput.value,surnameFilterInput.value)"><i class="bi bi-search"></i></button>
+        </form>
+        <br>
+        
+        <div class="col-md-6 col-sm-3">
+            <app-list-users [users]="users" (selectedUser)="processReq($event)" ></app-list-users>
+        </div>
+        <div *ngIf="selectedUser" class="col-md-6 col-sm-9 col">
+            <app-detail-user [selectedUser]="selectedUser"></app-detail-user>
+        </div>
+        
+    </div>
+</div>

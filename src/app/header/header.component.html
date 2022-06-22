@@ -1,0 +1,53 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+      
+      <a [routerLink]="['blog']" class="navbar-brand" >
+          <img src="/assets/images/icon.PNG" alt="" width="30" height="30" class="d-inline-block align-text-top"> RentAround
+      </a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a [routerLink]="['blog']" class="nav-link" ><i class="bi bi-house">Home</i></a>
+        </li>
+        <li class="nav-item" *ngIf="authentificationService.isAdmin()">
+          <a class="nav-link" [routerLink]="['blog/admin/cars']"><i class="bi bi-truck" ></i>Cars</a>
+        </li>
+        <li class="nav-item" *ngIf="authentificationService.isAdmin()">
+          <a class="nav-link" href="#" [routerLink]="['/blog/admin/users']"><i class="bi bi-person"></i>Users</a>
+        </li>
+        
+        <li *ngIf="authentificationService.isAdmin()" ngbDropdown class="nav-item dropdown">
+          <a  ngbDropdownToggle class="nav-link dropdown-toggle"  id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-file-lock2"></i> Admins
+          </a>
+          <ul ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a  ngbDropdownItem class="dropdown-item" href="#" [routerLink]="['blog/admin/add_admin']"><i class="bi bi-person-plus-fill"></i> Add Admin</a></li>
+            <li><a  ngbDropdownItem class="dropdown-item" href="#" [routerLink]="['blog/admin/admins']"><i class="bi bi-person-lines-fill"></i> List Admin</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav d-flex flex-row ms-auto me-3">
+        <li *ngIf="authentificationService.isLogged()" ngbDropdown class="nav-item me-3 me-lg-0 dropdown">
+          <a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown1" role="button" data-mdb-toggle="dropdown"
+            aria-expanded="false">
+            <img  src="assets/images/{{authentificationService.getImage()}}" class="rounded-circle" height="22"
+              alt="" loading="lazy" />
+          </a>
+          <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
+            <li><a ngbDropdownItem class="dropdown-item" href="#" [routerLink]="['blog/account']">Account</a></li>
+            
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a ngbDropdownItem class="dropdown-item" href="#" (click)="logout()">Disconnect</a>
+            </li>
+          </ul>
+        </li>
+        <button *ngIf="! authentificationService.isLogged()" [routerLink]="['member/signin']" type="button" class="btn btn-success ms-3">Sign In</button>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Navbar -->

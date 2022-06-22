@@ -1,0 +1,65 @@
+<head>
+    <link rel="stylesheet" href="/assets/css/rotating-card.css">
+</head>
+<div class="col-md-12 col-sm-12">
+    <div class="card-container">
+        <div class="card">
+            <div class="front">
+                 <div class="cover">
+                    <img src="/assets/images/rotating_card_thumb2.png">
+                </div>
+                <div class="user">
+                     <img class="img-circle" src="/assets/images/{{selectedAdmin.image}}">
+                </div>
+                <div class="content">
+                    <div class="main">
+                        <h3 class="name">{{selectedAdmin.name}} {{selectedAdmin.surname}}</h3>
+                        
+                        <p class="text-center">{{selectedAdmin.email}}</p>
+                    </div>
+                    <div class="footer">
+                        <i class="bi bi-arrow-left"></i> Auto Rotation
+                    </div>
+                </div>
+            </div> 
+            <div class="back">
+                <div class="header">
+                    <h5 class="motto">"There is only one boss. The customer. And he can fire everybody in the company from the chairman on down, simply by spending his money somewhere else."</h5>
+                </div>
+            <div class="content">
+                <div class="main">
+                <h4 class="text-center">Statistics</h4>
+                
+                    <div class="stats-container">
+                        <div class="stats">
+                            <h4></h4>
+                            <p>
+                           
+                            </p>
+                        </div>
+                        <div class="stats">
+                            <h4>{{selectedAdmin.reservations.length}}</h4>
+                            <p>
+                            Reservations
+                            </p>
+                        </div>
+                        <div class="stats">
+                            <h4></h4>
+                            <p>
+                            
+                            </p>
+                        </div>
+                    </div>     
+                     
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-danger" (click)="deleteAdmin()">Delete Account</button>
+                </div>
+            </div>
+            <div class="footer">
+                
+            </div>
+        </div> 
+    </div> 
+</div> 
+</div>

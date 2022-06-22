@@ -1,0 +1,412 @@
+
+  <head>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="/assets/css/templatemo-edu-meeting.css">
+    <link rel="stylesheet" href="/assets/css/owl.css">
+    <link rel="stylesheet" href="/assets/css/lightbox.css">
+
+  </head>
+
+<body>
+
+  <!-- ***** Main Banner Area Start ***** -->
+  <section class="section main-banner" id="top" data-section="section1">
+      <video autoplay muted loop id="bg-video">
+          <source src="/assets/images/pexels-c-technical-6117577.mp4" type="video/mp4" />
+      </video>
+
+      <div class="video-overlay header-text">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="caption">
+              <h6>Hello Dear Clients</h6>
+              <h2>Welcome to RentAround</h2>
+              <p>The first thing that comes to mind when we think about car rentals are cars. But what if we told you that there was a way to rent a car without having to own one? Yes,this is possible There are many different companies out there that offer their services online. we offer “rental car” online.</p>
+              <div class="main-button-red">
+                  <div class="scroll-to-section"><a href="blog#meetings">Rent Now!</a></div>
+              </div>
+          </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </section>
+  <!-- ***** Main Banner Area End ***** -->
+
+  <section class="upcoming-meetings" id="meetings">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-heading">
+            <h2>Rent A Car</h2>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="categories">
+            <h4>Search Car</h4>
+            <form >
+               <!-- model filter -->
+             <div class="form-outline mb-4">
+              <input type="text" name="model" id="model" class="form-control form-control-lg"
+                placeholder="Car Model" #modelInput/>  
+            </div>
+
+              <!-- region input -->
+            <div class="form-outline mb-3">
+             <select class="form-select" name="region" id="region" #regionInput>
+                <option selected value="" >Region</option>
+                <option value="sousse" >Sousse</option>
+                <option value="monastir">Monastir</option>
+                <option value="mahdia">Mahdia</option>
+              </select>
+            </div>
+            
+            <!-- availibility input -->
+            <div class="form-outline mb-3">
+              <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" (change)="changeAvailability()">
+                  <label class="form-check-label" for="flexSwitchCheckDefault">Availability</label>
+                </div>
+             </div>
+
+            
+            <div class="main-button-red">
+              <a href="#" onclick="return false;" (click)="filterCars(modelInput,regionInput)">Search</a>
+            </div>
+          </form>
+          </div>
+          
+        </div>
+        <div class="col-lg-8">
+          <div class="row">
+            <!-- list of cars -->
+            <div *ngFor="let car of cars" class="col-lg-6">
+              <div class="meeting-item">
+                <div class="thumb">
+                  <div class="price">
+                    <span>{{car.pricePerDay}}dt</span>
+                  </div>
+                  <a href="#" [routerLink]="['/blog/reservation/',car.id]"><img src="./assets/images/{{car.image}}" width="370"  height="215" alt="New Lecturer Meeting"></a>
+                </div>
+                <div class="down-content">
+
+
+                  <!-- availability-->
+                  <div *ngIf="! authentificationService.isAdmin()">
+                    <div *ngIf="car.availability" class="date">
+                      <h6>AVB <span><svg xmlns="http://www.w3.org/2000/svg" width="60" height="50" fill="currentColor" color="green" class="bi bi-dot" viewBox="0 0 16 16"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg></span></h6>
+                    </div>
+
+                    <div *ngIf="! car.availability" class="date">
+                      <h6>AVB <span><svg xmlns="http://www.w3.org/2000/svg" width="60" height="50" fill="currentColor" color="red" class="bi bi-dot" viewBox="0 0 16 16"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg></span></h6>
+                    </div>
+                  </div>
+                  
+                  <!-- availability for admin-->
+                  <div *ngIf="authentificationService.isAdmin()">
+                    <div *ngIf="car.availability" class="date">
+                      <h6>AVB <a href="#" onclick="return false;" (click)="updateAvailability(car)"><span><svg xmlns="http://www.w3.org/2000/svg" width="60" height="50" fill="currentColor" color="green" class="bi bi-dot" viewBox="0 0 16 16"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg></span></a></h6>
+                    </div>
+
+                    <div *ngIf="! car.availability" class="date">
+                      <h6>AVB <a href="#" onclick="return false;" (click)="updateAvailability(car)"><span><svg xmlns="http://www.w3.org/2000/svg" width="60" height="50" fill="currentColor" color="red" class="bi bi-dot" viewBox="0 0 16 16"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg></span></a></h6>
+                    </div>
+                  </div>
+                  <a href="#"><h4>{{car.model}}</h4></a>
+                  <!-- end availability -->
+                  <p>{{car.region}}</p>
+               
+                </div>
+              </div>
+            </div>
+            <!-- end of list cars-->
+            
+
+            <nav aria-label="Page navigation example">
+              <ul *ngIf="cars.length>0" class="pagination">
+                <button  [disabled]="currentPage==1" class="page-item btn btn-danger" (click)="previous()">Previous</button>
+                <button [disabled]="numberOfCarsInNextPage==0" class="page-item btn btn-danger" (click)="next()">Next</button>
+              </ul>
+            </nav>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="apply-now" id="apply">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 align-self-center">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="item">
+                <h3>APPLY TO BECOME SPONSOR</h3>
+                <p>We are looking for sponsors who want to help us reach our goal of helping people get healthy and live their best lives. If you have any questions about becoming a sponsor please contact us.</p>
+                <div class="main-button-red">
+                  <div class="scroll-to-section"><a href="blog#contact">Join Us Now!</a></div>
+              </div>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="item">
+                <h3>APPLY TO BECOME ADMIN</h3>
+                <p>We are looking for sponsors who want to help us reach our goals. Please contact us for more information.</p>
+                <div class="main-button-yellow">
+                  <div class="scroll-to-section"><a href="blog#contact">Join Us Now!</a></div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="accordions is-first-expanded">
+            <article class="accordion">
+                <div class="accordion-head">
+                    <span>About rentaround</span>
+                    <span class="icon">
+                        <i class="icon fa fa-chevron-right"></i>
+                    </span>
+                </div>
+                <div class="accordion-body">
+                    <div class="content">
+                        <p>If you want to rent the best car quality this is exactly what you are searching for</p>
+                    </div>
+                </div>
+            </article>
+            <article class="accordion">
+                <div class="accordion-head">
+                    <span>Foundation</span>
+                    <span class="icon">
+                        <i class="icon fa fa-chevron-right"></i>
+                    </span>
+                </div>
+                <div class="accordion-body">
+                    <div class="content">
+                        <p>Our company was founded in juin 2022 by Wael Chabchoub</p>
+                    </div>
+                </div>
+            </article>
+            <article class="accordion">
+                <div class="accordion-head">
+                    <span>Please tell your friends</span>
+                    <span class="icon">
+                        <i class="icon fa fa-chevron-right"></i>
+                    </span>
+                </div>
+                <div class="accordion-body">
+                    <div class="content">
+                        <p>We are hiring new Admins and sponsors to work with us</p>
+                    </div>
+                </div>
+            </article>
+            <article class="accordion last-accordion">
+                <div class="accordion-head">
+                    <span>Number of Employees</span>
+                    <span class="icon">
+                        <i class="icon fa fa-chevron-right"></i>
+                    </span>
+                </div>
+                <div class="accordion-body">
+                    <div class="content">
+                        <p>there is currently 2 Employee in our company</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="our-facts">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-lg-12">
+              <h2>A Few Facts About Our Company</h2>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-12">
+                  <div class="count-area-content percentage">
+                    <div class="count-digit">94</div>
+                    <div class="count-title">Succesed Rentals</div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="count-area-content">
+                    <div class="count-digit">5</div>
+                    <div class="count-title">Current cars</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-12">
+                  <div class="count-area-content new-students">
+                    <div class="count-digit">2</div>
+                    <div class="count-title">Employees</div>
+                  </div>
+                </div> 
+                <div class="col-12">
+                  <div class="count-area-content">
+                    <div class="count-digit">32</div>
+                    <div class="count-title">Awards</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+        <div class="col-lg-6 align-self-center">
+          <div class="video">
+            <a href="https://www.youtube.com/watch?v=mKci2gErqJo" target="_blank"><img src="/assets/images/play-icon.png" alt=""></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-us" id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 align-self-center">
+          <div class="row">
+            <div class="col-lg-12">
+              <form id="contact" ngNoForm [action]="url" method="post">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h2>Let's get in touch</h2>
+                  </div>
+                  <div class="col-lg-4">
+                    <fieldset>
+                      <input name="name" type="text" id="name" placeholder="YOURNAME...*" required="">
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-4">
+                    <fieldset>
+                    <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="YOUR EMAIL..." required="">
+                  </fieldset>
+                  </div>
+                  <div class="col-lg-4">
+                    <fieldset>
+                      <input name="subject" type="text" id="subject" placeholder="SUBJECT...*" required="">
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <textarea name="message" type="text" class="form-control" id="message" placeholder="YOUR MESSAGE..." required=""></textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <button type="submit" id="form-submit" class="button">SEND MESSAGE NOW</button>
+                    </fieldset>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="right-info">
+            <ul>
+              <li>
+                <h6>Phone Number</h6>
+                <span>50284330</span>
+              </li>
+              <li>
+                <h6>Email Address</h6>
+                <span>admin@rentaround.tn</span>
+              </li>
+              <li>
+                <h6>Street Address</h6>
+                <span>342 Venezuela Street Sousse</span>
+              </li>
+              <li>
+                <h6>Website URL</h6>
+                <span>www.rentaround.tn</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <p>Copyright © 2022 rentaround, Ltd. All Rights Reserved. 
+          <br>
+          Design: <a href="https://www.facebook.com/wael.chabchoub.1/" target="_parent" title="free css templates">WAEL CHABCHOUB</a>
+          <br>
+          Distibuted By: <a href="https://www.facebook.com/wael.chabchoub.1/" target="_blank" title="Build Better UI, Faster">WAEL CHABCHOUB</a>
+        </p>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/isotope.min.js"></script>
+    <script src="/assets/js/owl-carousel.js"></script>
+    <script src="/assets/js/lightbox.js"></script>
+    <script src="/assets/js/tabs.js"></script>
+    <script src="/assets/js/video.js"></script>
+    <script src="/assets/js/slick-slider.js"></script>
+    <script src="/assets/js/custom.js"></script>
+    <script>
+        //according to loftblog tut
+        $('.nav li:first').addClass('active');
+
+        var showSection = function showSection(section, isAnimate) {
+          var
+          direction = section.replace(/#/, ''),
+          reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+          reqSectionPos = reqSection.offset().top - 0;
+
+          if (isAnimate) {
+            $('body, html').animate({
+              scrollTop: reqSectionPos },
+            800);
+          } else {
+            $('body, html').scrollTop(reqSectionPos);
+          }
+
+        };
+
+        var checkSection = function checkSection() {
+          $('.section').each(function () {
+            var
+            $this = $(this),
+            topEdge = $this.offset().top - 80,
+            bottomEdge = topEdge + $this.height(),
+            wScroll = $(window).scrollTop();
+            if (topEdge < wScroll && bottomEdge > wScroll) {
+              var
+              currentId = $this.data('section'),
+              reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+              reqLink.closest('li').addClass('active').
+              siblings().removeClass('active');
+            }
+          });
+        };
+
+        $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+          e.preventDefault();
+          showSection($(this).attr('href'), true);
+        });
+
+        $(window).scroll(function () {
+          checkSection();
+        });
+    </script>
+</body>

@@ -1,0 +1,84 @@
+
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-9 col-lg-6 col-xl-5">
+          <img src="assets/images/obi-pixel6propix-JIcR3-O8ko8-unsplash.jpg"
+            class="img-fluid" alt="Sample image">
+        </div>
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+          <br><br><br>
+          <form #formulaire = "ngForm">
+             <!-- model input -->
+             <div class="form-outline mb-4">
+              <label class="form-label" for="model">Model</label>
+              <input type="text" name="model" id="model" class="form-control form-control-lg"
+                placeholder="Car Model" ngModel required/>  
+            </div>
+
+             <!-- color input -->
+             <div class="form-outline mb-4">
+              <label class="form-label" for="color">Color</label>
+              <input type="text" name="color" id="color" class="form-control form-control-lg"
+                placeholder="Car Color" ngModel required/>
+              
+            </div>
+
+            <!-- price input -->
+            <div class="form-outline mb-4">
+              <label class="form-label" for="pricePerDay">Price Per Day</label>
+              <input type="number" name="pricePerDay" id="pricePerDay" class="form-control form-control-lg"
+                placeholder="Enter a valid Price" ngModel required/>
+              
+            </div>
+  
+            <!-- nbPlace input -->
+            <div class="form-outline mb-3">
+              <label class="form-label" for="placeNb">Place Number</label>
+              <input type="number" name="placeNb" id="placeNb" class="form-control form-control-lg"
+                placeholder="Enter number of Place" ngModel required/>
+              
+            </div>
+
+            <!-- region input -->
+            <div class="form-outline mb-3" >
+              <label class="form-label" for="region">Region</label>
+             <select class="form-select" name="region" id="region" ngModel required>
+                <option value="sousse" >Sousse</option>
+                <option value="monastir">Monastir</option>
+                <option value="mahdia">Mahdia</option>
+              </select>
+            </div>
+          
+             <!-- image input -->
+             <div class="form-outline mb-3">
+                <label class="form-label" for="image">Image</label>
+                <input type="file" name="image" id="image" class="form-control form-control-lg"
+                  placeholder="Select an Image" ngModel required (change)="checkImageType($event)"/>
+              </div>
+              <div class="alert alert-danger" *ngIf="imageErrorMessage">
+                {{imageErrorMessage}}
+              </div>
+              
+             <!-- availibility input -->
+             <div class="form-outline mb-3">
+              <label class="form-label" for="form_check">Availability</label>
+              <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" (change)="availability = ! availability">
+                  <label class="form-check-label" for="flexSwitchCheckDefault">switch checkbox input</label>
+                </div>
+             </div>
+  
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <button type="button" class="btn btn-dark btn-lg"
+                style="padding-left: 2.5rem; padding-right: 2.5rem;" [disabled]="formulaire.invalid" (click)="addCar(formulaire)">Submit</button>
+                <br><br><br>
+            </div>
+                
+          </form>
+        </div>
+      </div>
+    </div>
+    
+  </section>
+  
