@@ -91,6 +91,10 @@ export class HomeComponent implements OnInit {
 
   updateAvailability(car:Car){
     car.availability=!car.availability;
-    this.blogService.updateCarAvailability(car.id,car);
+    this.blogService.updateCarAvailability(car.id,car).subscribe(
+      (response)=>{
+
+      }
+    );
   }
 }
